@@ -1,18 +1,38 @@
 [
-{"question":"This is a Sample Question 1?",
+{"question":"1. Affine transformation are",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"Linear transformation",
+            "b":"Quadratic transformation",
+            "c":"Higher order transformation",
+            "d":"Cannot say"
           },
 "correctAnswer":"a"},
-{"question":"This is a Sample Question 2?",
+
+{"question":"2. After performing 45� rotation on input image",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"Output Image size is increase",
+            "b":"Output Image size is decrease",
+            "c":"No change",
+            "d":"Cannot say"
           },
-"correctAnswer":"c"} 
+"correctAnswer":"c"}, 
+
+{"question":"3. Which interpolation method performs better when we upscale input image by factor 4",
+"answers":{
+            "a":"Linear",
+            "b":"Bilinear",
+            "c":"Bicubic",
+            "d":"All"
+          },
+"correctAnswer":"a"},
+
+{"question":"4. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
+"answers":{
+            "a":"i and ii",
+            "b":"iii and iv",
+            "c":"i and iv",
+            "d":"None of the above"
+          },
+"correctAnswer":"c"}
+
 ]
