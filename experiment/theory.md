@@ -2,15 +2,15 @@ An affine transformation is a geometrical transformation which moves points in s
 
 Given a point which is a point location [x, y]<sup>T</sup> , transformed location after translation, rotation and scaling can be as follows.
 
-<img src="affine/images/image012.jpg">
+<img src="images/image012.jpg">
 
-|Translation  |<img src="affine/images/image013.jpg"> <img src="affine/images/image014.jpg"">|<img src="affine/images/image015.jpg">| 	
-|-------------|------------------------------------------------------------------------------|--------------------------------------|
-|Rotation (θ)|<img src="affine/images/image016.jpg"> <img src="affine/images/image017.jpg"> |<img src="affine/images/image018.jpg">|
-|             |                                                                              |<img src="affine/images/image019.jpg">|	
-|-------------|------------------------------------------------------------------------------|--------------------------------------|
-|Scaling      |<img src="affine/images/image020.jpg"> <img src="affine/images/image021.jpg"> |<img src="affine/images/image022.jpg">| 
-|             |                                                                              |<img src="affine/images/image023.jpg">|    	
+|Translation  |<img src="images/image013.jpg"> <img src="images/image014.jpg"">|<img src="images/image015.jpg">| 	
+|-------------|----------------------------------------------------------------|-------------------------------|
+|Rotation (θ)|<img src="images/image016.jpg"> <img src="images/image017.jpg"> |<img src="images/image018.jpg">|
+|             |                                                                |<img src="images/image019.jpg">|	
+|-------------|----------------------------------------------------------------|-------------------------------|
+|Scaling      |<img src="images/image020.jpg"> <img src="images/image021.jpg"> |<img src="images/image022.jpg">| 
+|             |                                                                |<img src="images/image023.jpg">|    	
 
 	
 To geometrically transform an image, the result we seek is an image with transformed coordinates. The result of applying the transformation function is generally not an integer particularly in case of rotation and scaling. This poses a problem since the image is defined on a grid (coordnates have to be integer valued). The solution is interpolation.
@@ -23,10 +23,10 @@ n implementation, image rotation is done as follows. Given I[m,n] to find a tran
 
 Example: Consider A to be rotation by 30 degrees. Let us take the location [12, 13] in X and find its corresponding location in I. This will be [3.89 17.26]. To determine the value of I at this location, we can use the known values closest to this location
 
-<img src="affine/images/image024.jpg">
+<img src="images/image024.jpg">
 
      
-<img src="affine/images/image025.jpg">
+<img src="images/image025.jpg">
 
 **Option 1:** Round off the [m, n] and take the pixel value at that location. This is known as the nearest neighbour interpolation method.
 
