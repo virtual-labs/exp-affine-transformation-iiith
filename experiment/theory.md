@@ -1,4 +1,4 @@
-An affine transformation is a geometrical transformation which moves points in space such that points which were lying on a line remain so after the transformation.
+gAn affine transformation is a geometrical transformation which moves points in space such that points which were lying on a line remain so after the transformation.
 
 Given a point which is a point location [x, y]<sup>T</sup> , transformed location after translation, rotation and scaling can be as follows.
 
@@ -8,7 +8,7 @@ Given a point which is a point location [x, y]<sup>T</sup> , transformed locatio
 |-------------|----------------------------------------------------------------|-------------------------------|
 |Rotation (θ)|<img src="images/image016.jpg"> <img src="images/image017.jpg"> |<img src="images/image018.jpg">|
 |             |                                                                |<img src="images/image019.jpg">|	
-|-------------|----------------------------------------------------------------|-------------------------------|
+|             |                                                                |                               |  
 |Scaling      |<img src="images/image020.jpg"> <img src="images/image021.jpg"> |<img src="images/image022.jpg">| 
 |             |                                                                |<img src="images/image023.jpg">|    	
 
