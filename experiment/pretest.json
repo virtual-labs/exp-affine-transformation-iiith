@@ -17,22 +17,4 @@
           },
 "correctAnswer":"c"}, 
 
-{"question":"3. Which interpolation method performs better when we upscale input image by factor 4",
-"answers":{
-            "a":"Linear",
-            "b":"Bilinear",
-            "c":"Bicubic",
-            "d":"All"
-          },
-"correctAnswer":"a"},
-
-{"question":"4. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
-"answers":{
-            "a":"i and ii",
-            "b":"iii and iv",
-            "c":"i and iv",
-            "d":"None of the above"
-          },
-"correctAnswer":"c"}
-
 ]
