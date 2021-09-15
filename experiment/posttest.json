@@ -1,18 +1,19 @@
 [
-{"question":"This is a Sample Question 1?",
+{"question":"3. Which interpolation method performs better when we upscale input image by factor 4",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"Linear",
+            "b":"Bilinear",
+            "c":"Bicubic",
+            "d":"All"
           },
 "correctAnswer":"a"},
-{"question":"This is a Sample Question 2?",
+
+{"question":"4. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
 "answers":{
-            "a":"answer1",
-            "b":"answer2",
-            "c":"answer3",
-            "d":"answer4"
+            "a":"i and ii",
+            "b":"iii and iv",
+            "c":"i and iv",
+            "d":"None of the above"
           },
-"correctAnswer":"c"} 
+"correctAnswer":"c"}
 ]
