@@ -6,13 +6,11 @@
 4. Affine Transformation (and cousins) [http://www.leptonica.com/affine.html](http://www.leptonica.com/affine.html)
 5. Affine Transformation [http://c2.com/cgi/wiki?AffineTransformation](http://c2.com/cgi/wiki?AffineTransformation)
 6. Affine [http://www.roborealm.com/help/Affine.php](http://www.roborealm.com/help/Affine.php)
-7. Image Affine Trasnformation [http://cvlab.epfl.ch/~jpilet/image_science/serie2/](http://cvlab.epfl.ch/~jpilet/image_science/serie2/)
 
 **Basic web references**
 
-1. Lecture Notes in Digital Image Processing [http://eeweb.poly.edu/~onur/lectures/lectures.html](http://eeweb.poly.edu/~onur/lectures/lectures.html)
-2. Advanced Image Processing Lab [http://www.eng.tau.ac.il/~yaro/lectnotes/](http://www.eng.tau.ac.il/~yaro/lectnotes/)
-3. Digital Image Processing [http://www.cs.nmt.edu/~ip/lectures.html](http://www.cs.nmt.edu/~ip/lectures.html)
+1. Advanced Image Processing Lab [http://www.eng.tau.ac.il/~yaro/lectnotes/](http://www.eng.tau.ac.il/~yaro/lectnotes/)
+2. Digital Image Processing [http://www.cs.nmt.edu/~ip/lectures.html](http://www.cs.nmt.edu/~ip/lectures.html)
 
 **Books:**
 
