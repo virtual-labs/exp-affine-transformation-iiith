@@ -8,7 +8,7 @@
           },
 "correctAnswer":"a"},
 
-{"question":"2. After performing 45� rotation on input image",
+{"question":"2. After performing 45<sup>o</sup> rotation on input image",
 "answers":{
             "a":"Output Image size is increase",
             "b":"Output Image size is decrease",
