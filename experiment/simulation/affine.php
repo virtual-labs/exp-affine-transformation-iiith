@@ -41,7 +41,7 @@ to the top of search engine rankings.  They are just part of that effort.  You
 can get more information by googling SEO or visiting the psd2css Online forums. -->
 <meta name="description" content="Affine Transsformation Experiment in Image Processing Lab" />
 <meta name="keywords" content="Affine, Image Processing Lab, Virtual Lab" />
-<meta name="generator" content="Partially Generated from psd2css.com />
+<meta name="generator" content="Partially Generated from psd2css.com" />
 
 <!-- The CSS Reset from Eric Meyers -->
 <link rel="stylesheet" type="text/css" href="cssreset.css" media="screen" />
@@ -548,31 +548,9 @@ if($_GET["exp"]=="piping"  || isset($_GET["assess"])) {
 <a onclick="confirmTo('index.html')">home</a>
 </div>
 
-			<div class="menu">
-<ul>
-<li><a href="objective.php?exp=affine" target="_self" >Objective</a>
-</li>
-<li><a href="intro.php?exp=affine" target="_self" >Introduction</a>
-</li>
-<li><a href="theory.php?exp=affine" target="_self" >Theory</a>
-</li>
-<li><a href="procedure.php?exp=affine" target="_self" >Procedure</a>
-</li>
+			
 <li><sel><a href="affine.php" target="_self" >Experiment</a>
 </sel></li>
-<li><a href="#" target="_self" >Assessment</a>
-				<ul>
-					<li><a href="quiz.php?exp=affine">Quiz</a></li>
-					<li><a href="assign.php?exp=affine">Assignment</a></li>
-			   </ul>
-
-</li>
-<!--<li><a href="references.php?exp=affine" target="_self" >References</a>
-</li> -->
-<li><a href="summary.php" target="_blank" >Summary</a>
-</li>
-</ul>
-</div>
 			</div>
 			
 
