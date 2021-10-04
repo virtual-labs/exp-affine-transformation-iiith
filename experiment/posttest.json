@@ -1,5 +1,5 @@
 [
-{"question":"3. Which interpolation method performs better when we upscale input image by factor 4",
+{"question":"1. Which interpolation method performs better when we upscale input image by factor 4",
 "answers":{
             "a":"Linear",
             "b":"Bilinear",
@@ -8,7 +8,7 @@
           },
 "correctAnswer":"a"},
 
-{"question":"4. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
+{"question":"2. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
 "answers":{
             "a":"i and ii",
             "b":"iii and iv",
