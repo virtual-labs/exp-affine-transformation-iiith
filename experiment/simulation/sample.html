@@ -1,29 +1,3 @@
-<?php
-session_start();
-
-if($_GET["exp"]!="piping") {
-	if(isset($_GET["source"]) && isset($_GET["id"])) {
-		$_SESSION["currentS"]=$_GET["source"]; 
-		$_SESSION["id"]=$_GET["id"]; 
-	} else {
-		$_SESSION["id"]=time();
-		$_SESSION["state"]=0;
-	}
-}
-
-$orders[1]="Scaling";
-$orders[2]="Rotation";
-$orders[3]="Translation";
-
-if(isset($_GET["assess"])) {
-	$_SESSION["currentS"]=1;
-	$_SESSION["id"]=$_GET["assess"];
-	$_SESSION["state"]=100;
-}
-
-?> 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -535,8 +509,8 @@ if($_GET["exp"]=="piping"  || isset($_GET["assess"])) {
 		else { echo 'images/Layer-4.jpg" width="281" height="281"'; }} ?> alt="InputLayer" /></div>
 
     <!-- This is 'TopBar_jpg' -->
-   <!-- <div id="Layer-3" class="TopBar_jpg"  >
-      <img src="images/Layer-3.jpg" width="894" height="96" alt="TopBar" />-->
+    <div id="Layer-3" class="TopBar_jpg"  >
+      <img src="images/Layer-3.jpg" width="894" height="96" alt="TopBar" />
       <!-- This is 'IIIT' -->
      <!-- <div id="Layer-6" class="IIIT"  >
         <img src="images/iiit.png" width="100" height="70" alt="IIIT" class="pngimg" />
