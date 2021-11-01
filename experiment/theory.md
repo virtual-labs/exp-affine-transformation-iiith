@@ -4,7 +4,11 @@ Given a point which is a point location [x, y]<sup>T</sup> , transformed locatio
 
 <img src="images/image012.jpg">
 
-<img src="images/table1.png">
+<br/>
+
+<img src="images/table1.png">  
+
+<br/>	
 	
 To geometrically transform an image, the result we seek is an image with transformed coordinates. The result of applying the transformation function is generally not an integer particularly in case of rotation and scaling. This poses a problem since the image is defined on a grid (coordnates have to be integer valued). The solution is interpolation.
 
