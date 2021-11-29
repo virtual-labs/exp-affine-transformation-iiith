@@ -2,10 +2,8 @@
 
 1. Affine Transformation [http://homepages.inf.ed.ac.uk/rbf/HIPR2/affine.htm](http://homepages.inf.ed.ac.uk/rbf/HIPR2/affine.htm)
 2. Affine Transformations [http://www.geom.uiuc.edu/docs/reference/CRC-formulas/node15.html](http://www.geom.uiuc.edu/docs/reference/CRC-formulas/node15.html)
-3. Affine Transformations [http://xahlee.org/complex/affine/affine.html](http://xahlee.org/complex/affine/affine.html)
-4. Affine Transformation (and cousins) [http://www.leptonica.com/affine.html](http://www.leptonica.com/affine.html)
-5. Affine Transformation [http://c2.com/cgi/wiki?AffineTransformation](http://c2.com/cgi/wiki?AffineTransformation)
-6. Affine [http://www.roborealm.com/help/Affine.php](http://www.roborealm.com/help/Affine.php)
+3. Affine Transformation (and cousins) [http://www.leptonica.com/affine.html](http://www.leptonica.com/affine.html)
+4. Affine [http://www.roborealm.com/help/Affine.php](http://www.roborealm.com/help/Affine.php)
 
 **Basic web references**
 
