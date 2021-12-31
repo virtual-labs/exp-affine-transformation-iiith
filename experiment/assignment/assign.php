@@ -48,7 +48,7 @@ at http://jquery.com
 </div>
 
 			<div class="menu">
-<ul>
+<!--<ul>
 <li><a href="objective.php?exp=<?php echo $exp; ?>" target="_self" >Objective</a>
 </li>
 <li><a href="intro.php?exp=<?php echo $exp; ?>" target="_self" >Introduction</a>
@@ -59,12 +59,12 @@ at http://jquery.com
 </li>
 <li><a href="<?php echo $exp; ?>.php" target="_self" >Experiment</a>
 </li> --> 
-<!-- <li><sel><a href="#" target="_self" >Assessment</a>
-</sel>
- -->		<!-- 		<ul>
-					<li><a href="quiz.php?exp=<?php echo $exp; ?>">Quiz</a></li> -->
+<li><sel><a href="#" target="_self" >Assessment</a>
+</sel>-->
+		<!-- 		<ul>
+					<li><a href="quiz.php?exp=<?php echo $exp; ?>">Quiz</a></li> 
 					<li><a href="assign.php?exp=<?php echo $exp; ?>">Assignment</a></li>
-			   <!-- </ul>
+			        </ul>
 
 </li> -->
 <!-- <li><a href="references.php?exp=<?php echo $exp; ?>" target="_self" >References</a>
