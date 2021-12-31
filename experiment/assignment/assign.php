@@ -58,7 +58,7 @@ at http://jquery.com
 <li><a href="procedure.php?exp=<?php echo $exp; ?>" target="_self" >Procedure</a>
 </li>
 <li><a href="<?php echo $exp; ?>.php" target="_self" >Experiment</a>
-</li> --> 
+</li> 
 <li><sel><a href="#" target="_self" >Assessment</a>
 </sel>-->
 		<!-- 		<ul>
