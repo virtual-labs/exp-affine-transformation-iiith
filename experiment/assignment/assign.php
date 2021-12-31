@@ -45,9 +45,9 @@ at http://jquery.com
 			<h1>VIRTUAL LAB in IMAGE PROCESSING</h1>
 <div class="home">
 <a href="index.html">home</a>
-</div>
+</div>-->
 
-			<div class="menu">
+		<!--	<div class="menu">
 <ul>
 <li><a href="objective.php?exp=<?php echo $exp; ?>" target="_self" >Objective</a>
 </li>
@@ -58,19 +58,19 @@ at http://jquery.com
 <li><a href="procedure.php?exp=<?php echo $exp; ?>" target="_self" >Procedure</a>
 </li>
 <li><a href="<?php echo $exp; ?>.php" target="_self" >Experiment</a>
-</li> --> 
-<!-- <li><sel><a href="#" target="_self" >Assessment</a>
-</sel>
- -->		<!-- 		<ul>
-					<li><a href="quiz.php?exp=<?php echo $exp; ?>">Quiz</a></li> -->
+</li> 
+<li><sel><a href="#" target="_self" >Assessment</a>
+</sel>-->
+		<!-- 		<ul>
+					<li><a href="quiz.php?exp=<?php echo $exp; ?>">Quiz</a></li> 
 					<li><a href="assign.php?exp=<?php echo $exp; ?>">Assignment</a></li>
-			   <!-- </ul>
+			        </ul>
 
 </li> -->
 <!-- <li><a href="references.php?exp=<?php echo $exp; ?>" target="_self" >References</a>
-</li> -->
+</li> 
 </ul>
-</div>
+</div>-->
 </div>
 <div class="experiment front" style="text-indent: 20px; background-color: #DDDDDD;" >
 
