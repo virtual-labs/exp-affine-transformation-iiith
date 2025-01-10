@@ -8,7 +8,7 @@
           },
 "correctAnswer":"a"},
 
-{"question":"2. Which of the ordering pairs leads to the same effect on an image? i) scaling->rotation-> translation  ii) scaling ->translation->rotation  iii) translation-> rotation-> scaling  iv) rotation ->scaling ->translation",
+{"question":"2. Which of the ordering pairs leads to the same effect on an image?<br> i) scaling->rotation-> translation<br>  ii) scaling ->translation->rotation<br>  iii) translation-> rotation-> scaling<br>  iv) rotation ->scaling ->translation<br>",
 "answers":{
             "a":"i and ii",
             "b":"iii and iv",
