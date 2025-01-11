@@ -129,7 +129,7 @@ at http://jquery.com
             break
           case 2:
             $('#nextBox').html(
-              "Click on the 'View Full Size Image' Button to view a closeup of the two images or on 'Reset' to start again at the beginning."
+              "Click on 'Reset' to start again at the beginning."
             )
             buttId = 'button3'
             blinker(8)
@@ -635,61 +635,61 @@ at http://jquery.com
             $('dims', '#imgInfo').html('__ x __')
 
             // Check the condition for 'exp' and 'assess' using getQueryVariable
-            if (
-              getQueryVariable('exp') !== 'piping' &&
-              getQueryVariable('assess') === null
-            ) {
-              set_state(0)
-            } else {
+            // if (
+            //   getQueryVariable('exp') !== 'piping' &&
+            //   getQueryVariable('assess') === null
+            // ) {
+            //   set_state(0)
+            // } else {
               set_state(1)
-            }
+            // }
 
             $('img', $('#Layer-5')).attr('src', 'images/Layer-5.jpg')
 
             // Check the condition for 'exp' again
-            if (getQueryVariable('exp') !== 'piping') {
-              const assessSrc =
-                getQueryVariable('assess') !== null
-                  ? `images/temp/${sessionStorage.getItem(
-                      'id'
-                    )}_${sessionStorage.getItem('currentS')}_result.png`
-                  : 'images/Layer-4.jpg'
+            // if (getQueryVariable('exp') !== 'piping') {
+              // const assessSrc =
+              //   getQueryVariable('assess') !== null
+              //     ? `images/temp/${sessionStorage.getItem(
+              //         'id'
+              //       )}_${sessionStorage.getItem('currentS')}_result.png`
+              //     : 'images/Layer-4.jpg'
 
-              $('img', $('#Layer-4')).attr('src', assessSrc)
-            }
+              $('img', $('#Layer-4')).attr('src', 'images/assess/affine1_1.png')
+            // }
 
             // Replace #sliderContent dynamically
-            const sliderContentHtml = `
-              <div id="sliderContent" class="ui-corner-all">
-                <div class="viewer ui-corner-all">
-                  <div class="content-conveyor ui-helper-clearfix">
-                    <div class="item">
-                      <h2>${
-                        getQueryVariable('assess') !== null
-                          ? 'Assessment'
-                          : 'Start'
-                      }</h2>
-                      <img src="${
-                        getQueryVariable('assess') !== null
-                          ? `images/temp/${sessionStorage.getItem(
-                              'id'
-                            )}_${sessionStorage.getItem('currentS')}.png`
-                          : 'images/Mosaic.png'
-                      }" alt="picture" width="140px" height="140px"/>
-                      <dl class="details ui-helper-clearfix">
-                        <dt>${
-                          getQueryVariable('assess') !== null
-                            ? 'This is the Input Image. Perform Operations to get the above result.'
-                            : 'Select a portion of the Mosaic on the Right and Transform...'
-                        }</dt>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-                <div id="slider"></div>
-              </div>`
+            // const sliderContentHtml = `
+            //   <div id="sliderContent" class="ui-corner-all">
+            //     <div class="viewer ui-corner-all">
+            //       <div class="content-conveyor ui-helper-clearfix">
+            //         <div class="item">
+            //           <h2>${
+            //             getQueryVariable('assess') !== null
+            //               ? 'Assessment'
+            //               : 'Start'
+            //           }</h2>
+            //           <img src="${
+            //             getQueryVariable('assess') !== null
+            //               ? `images/temp/${sessionStorage.getItem(
+            //                   'id'
+            //                 )}_${sessionStorage.getItem('currentS')}.png`
+            //               : 'images/Mosaic.png'
+            //           }" alt="picture" width="140px" height="140px"/>
+            //           <dl class="details ui-helper-clearfix">
+            //             <dt>${
+            //               getQueryVariable('assess') !== null
+            //                 ? 'This is the Input Image. Perform Operations to get the above result.'
+            //                 : 'Select a portion of the Mosaic on the Right and Transform...'
+            //             }</dt>
+            //           </dl>
+            //         </div>
+            //       </div>
+            //     </div>
+            //     <div id="slider"></div>
+            //   </div>`
 
-            $('#sliderContent').replaceWith(sliderContentHtml)
+            // $('#sliderContent').replaceWith(sliderContentHtml)
 
             resetPos()
           })
@@ -912,7 +912,7 @@ at http://jquery.com
       </div>
 
       <div id="zoom">
-        <button3>View Full Size Image</button3>
+        <!-- <button3>View Full Size Image</button3> -->
       </div>
 
       <!-- This is 'Parameters_jpg' -->
