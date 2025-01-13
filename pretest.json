@@ -1,0 +1,20 @@
+[
+{"question":"1. Affine transformation are",
+"answers":{
+            "a":"Linear transformation",
+            "b":"Quadratic transformation",
+            "c":"Higher order transformation",
+            "d":"Cannot say"
+          },
+"correctAnswer":"a"},
+
+{"question":"2. After performing 45<sup>o</sup> rotation on input image",
+"answers":{
+            "a":"Output Image size is increase",
+            "b":"Output Image size is decrease",
+            "c":"No change",
+            "d":"Cannot say"
+          },
+"correctAnswer":"c"} 
+
+]

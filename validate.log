@@ -1,0 +1,11 @@
+{
+  _: [],
+  f: [
+    '/home/runner/work/exp-affine-transformation-iiith/exp-affine-transformation-iiith/experiment-descriptor.json'
+  ],
+  files: [
+    '/home/runner/work/exp-affine-transformation-iiith/exp-affine-transformation-iiith/experiment-descriptor.json'
+  ],
+  '$0': 'validate'
+}
+Validated true
