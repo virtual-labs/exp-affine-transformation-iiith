@@ -1,20 +1,159 @@
-[
-{"question":"1. Affine transformation are",
-"answers":{
-            "a":"Linear transformation",
-            "b":"Quadratic transformation",
-            "c":"Higher order transformation",
-            "d":"Cannot say"
-          },
-"correctAnswer":"a"},
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which of the following is an example of a geometric image transformation?",
+      "answers": {
+        "a": "Translation",
+        "b": "Histogram calculation",
+        "c": "Pixel intensity thresholding",
+        "d": "Image compression"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. Translation is a geometric transformation because it changes the position of an image by changing the coordinates of its pixels.",
+        "b": "Incorrect. A histogram describes the distribution of pixel intensities and does not represent a geometric transformation.",
+        "c": "Incorrect. Thresholding changes pixel values based on a condition rather than changing the geometric position of pixels.",
+        "d": "Incorrect. Image compression is used to reduce image data and is not a geometric transformation."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. Which transformation changes the position of an image without changing its orientation or size?",
+      "answers": {
+        "a": "Rotation",
+        "b": "Translation",
+        "c": "Scaling",
+        "d": "Interpolation"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "b": "Correct. Translation moves an image from one position to another while preserving its orientation and size.",
+        "a": "Incorrect. Rotation changes the orientation of the image.",
+        "c": "Incorrect. Scaling changes the size of the image.",
+        "d": "Incorrect. Interpolation is used to estimate pixel values at locations that do not fall exactly on the pixel grid."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. What is the main effect of scaling on an image?",
+      "answers": {
+        "a": "It changes only the image orientation.",
+        "b": "It changes only the image position.",
+        "c": "It changes the size of the image.",
+        "d": "It changes the interpolation method."
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "c": "Correct. Scaling changes the size of an image by multiplying its coordinates by scaling factors.",
+        "a": "Incorrect. Changing the orientation of an image is the primary effect of rotation.",
+        "b": "Incorrect. Changing the position of an image is the primary effect of translation.",
+        "d": "Incorrect. The interpolation method determines how pixel values are estimated during a transformation; it does not determine the size of the image."
+      },
+      "difficulty": "beginner"
+    },
 
-{"question":"2. After performing 45<sup>o</sup> rotation on input image",
-"answers":{
-            "a":"Output Image size is increase",
-            "b":"Output Image size is decrease",
-            "c":"No change",
-            "d":"Cannot say"
-          },
-"correctAnswer":"c"} 
-
-]
+    {
+      "question": "4. For a rotation by an angle $\\theta$ about the origin, which matrix represents the rotation transformation?",
+      "answers": {
+        "a": "$\\begin{bmatrix}\\cos\\theta & \\sin\\theta \\\\\\ -\\sin\\theta & \\cos\\theta\\end{bmatrix}$",
+        "b": "$\\begin{bmatrix}1 & 0 \\\\\\ 0 & 1\\end{bmatrix}$",
+        "c": "$\\begin{bmatrix}1 & t_x \\\\\\ 1 & t_y\\end{bmatrix}$",
+        "d": "$\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$"
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "d": "Correct. The standard two-dimensional rotation matrix about the origin is $\\begin{bmatrix}\\cos\\theta & -\\sin\\theta \\\\\\ \\sin\\theta & \\cos\\theta\\end{bmatrix}$.",
+        "a": "Incorrect. The signs of the off-diagonal terms do not match the rotation matrix used in the experiment.",
+        "b": "Incorrect. The identity matrix leaves the coordinates unchanged and therefore does not represent a general rotation.",
+        "c": "Incorrect. This matrix does not represent the rotation transformation."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. A point $(4,0)$ is rotated by $30^\\circ$ about the origin. Approximately where does the point move?",
+      "answers": {
+        "a": "$(4,2)$",
+        "b": "$(3.46,2)$",
+        "c": "$(2,3.46)$",
+        "d": "$(-3.46,2)$"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "b": "Correct. Using the rotation equations, $x'=4\\cos(30^\\circ)\\approx3.46$ and $y'=4\\sin(30^\\circ)=2$. Therefore, the transformed point is approximately $(3.46,2)$.",
+        "a": "Incorrect. The transformed horizontal coordinate is not unchanged at $4$ after a $30^\\circ$ rotation.",
+        "c": "Incorrect. The horizontal and vertical coordinates have been interchanged in this option.",
+        "d": "Incorrect. A $30^\\circ$ rotation of $(4,0)$ about the origin does not produce a negative horizontal coordinate."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. Why is interpolation required during image rotation or scaling?",
+      "answers": {
+        "a": "Because the transformed coordinates may not fall exactly on the original pixel grid.",
+        "b": "Because translation cannot be represented mathematically.",
+        "c": "Because scaling always changes the image orientation.",
+        "d": "Because interpolation changes the transformation matrix."
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. Rotation and scaling can produce non-integer pixel locations, so interpolation is used to estimate the corresponding pixel values from neighbouring pixels.",
+        "b": "Incorrect. Translation can be represented mathematically using coordinate transformations.",
+        "c": "Incorrect. Scaling changes the size of an image; it does not necessarily change its orientation.",
+        "d": "Incorrect. Interpolation estimates pixel values and does not change the transformation matrix itself."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. Which interpolation method uses the value of the nearest pixel to estimate the value at a transformed location?",
+      "answers": {
+        "a": "Bilinear interpolation",
+        "b": "Bicubic interpolation",
+        "c": "Nearest-neighbor interpolation",
+        "d": "Inverse interpolation"
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "c": "Correct. Nearest-neighbor interpolation assigns the value of the pixel closest to the required location.",
+        "a": "Incorrect. Bilinear interpolation estimates the value using the four surrounding pixels.",
+        "b": "Incorrect. Bicubic interpolation uses a larger neighbourhood, commonly a \\(4\\times4\\) neighbourhood.",
+        "d": "Incorrect. Inverse mapping is a coordinate-mapping approach and is not an interpolation method."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. Which interpolation method uses the four pixels surrounding the required location?",
+      "answers": {
+        "a": "Nearest-neighbor interpolation",
+        "b": "Bilinear interpolation",
+        "c": "Bicubic interpolation",
+        "d": "Inverse mapping"
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "b": "Correct. Bilinear interpolation uses the four pixels surrounding the required location and calculates a weighted average based on their distances.",
+        "a": "Incorrect. Nearest-neighbor interpolation uses only the closest pixel.",
+        "c": "Incorrect. Bicubic interpolation commonly uses a \\(4\\times4\\) neighbourhood rather than only four pixels.",
+        "d": "Incorrect. Inverse mapping determines the corresponding source location; it is not an interpolation method."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. What happens when multiple image transformations are applied in a different order?",
+      "answers": {
+        "a": "The final image is always identical.",
+        "b": "Only the interpolation method changes.",
+        "c": "The transformations are automatically cancelled.",
+        "d": "The final transformed image may be different."
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "d": "Correct. The order of multiple transformations can affect the final transformed image because transformations generally do not produce the same result when their order is changed.",
+        "a": "Incorrect. The result is not generally identical when the order of multiple transformations is changed.",
+        "b": "Incorrect. Changing the order of transformations affects the geometric result, not only the interpolation method.",
+        "c": "Incorrect. Applying transformations in a different order does not automatically cancel them."
+      },
+      "difficulty": "advanced"
+    }
+  ]
+}

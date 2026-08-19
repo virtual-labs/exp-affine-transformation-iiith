@@ -1,19 +1,158 @@
-[
-{"question":"1. Which interpolation method performs better when we upscale input image by factor 4",
-"answers":{
-            "a":"Linear",
-            "b":"Bilinear",
-            "c":"Bicubic",
-            "d":"All"
-          },
-"correctAnswer":"a"},
-
-{"question":"2. Which of the ordering pairs leads to the same effect on an image?<br> i) scaling->rotation-> translation<br>  ii) scaling ->translation->rotation<br>  iii) translation-> rotation-> scaling<br>  iv) rotation ->scaling ->translation<br>",
-"answers":{
-            "a":"i and ii",
-            "b":"iii and iv",
-            "c":"i and iv",
-            "d":"None of the above"
-          },
-"correctAnswer":"c"}
-]
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "1. Which transformation should be used when the position of an image needs to be changed without changing its size or orientation?",
+      "answers": {
+        "a": "Translation",
+        "b": "Rotation",
+        "c": "Scaling",
+        "d": "Bicubic interpolation"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. Translation changes the position of an image while preserving its size and orientation.",
+        "b": "Incorrect. Rotation changes the orientation of an image.",
+        "c": "Incorrect. Scaling changes the size of an image.",
+        "d": "Incorrect. Bicubic interpolation is used to estimate pixel values at transformed locations; it does not move the image."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "2. If $s_x=s_y$ during scaling, what happens to the proportions of the image?",
+      "answers": {
+        "a": "They are always distorted.",
+        "b": "They are preserved.",
+        "c": "The image is rotated.",
+        "d": "The image is translated."
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Equal scaling factors do not introduce different amounts of stretching along the two directions.",
+        "b": "Correct. When $s_x=s_y$, the same scaling factor is applied in both directions, so the proportions of the image are preserved.",
+        "c": "Incorrect. Scaling changes the size of the image and does not by itself rotate it.",
+        "d": "Incorrect. Scaling does not change the position of the image by itself."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "3. Which statement about an affine transformation is correct?",
+      "answers": {
+        "a": "It can only perform rotation.",
+        "b": "It can only change pixel intensity values.",
+        "c": "It can represent transformations such as translation, rotation, and scaling.",
+        "d": "It is an interpolation method."
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. An affine transformation is not limited to rotation.",
+        "b": "Incorrect. An affine transformation changes geometric coordinates rather than directly performing pixel-intensity operations.",
+        "c": "Correct. Translation, rotation, and scaling can be represented within the affine transformation framework.",
+        "d": "Incorrect. Interpolation is used to estimate pixel values during geometric transformations; it is not an affine transformation."
+      },
+      "difficulty": "beginner"
+    },
+    {
+      "question": "4. A transformed output location is calculated as $(3.89,17.26)$. Why is an interpolation method needed to obtain its pixel value from the original image?",
+      "answers": {
+        "a": "The location is outside the image by definition.",
+        "b": "The transformation has removed the pixel.",
+        "c": "The image must always be converted to a binary image.",
+        "d": "The location does not correspond exactly to an integer pixel location on the original grid."
+      },
+      "correctAnswer": "d",
+      "explanations": {
+        "a": "Incorrect. Non-integer coordinates do not by themselves mean that the location is outside the image.",
+        "b": "Incorrect. A non-integer transformed location does not mean that a pixel has been removed.",
+        "c": "Incorrect. Interpolation is not dependent on converting an image to a binary image.",
+        "d": "Correct. The coordinates $(3.89,17.26)$ are non-integer coordinates, so the corresponding pixel value must be estimated from nearby pixels using interpolation."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "5. Which interpolation method generally provides smoother results than nearest-neighbor interpolation by using the four surrounding pixels?",
+      "answers": {
+        "a": "Bilinear interpolation",
+        "b": "Nearest-neighbor interpolation",
+        "c": "Inverse mapping",
+        "d": "Translation"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. Bilinear interpolation uses the four surrounding pixels and calculates a weighted average to estimate the required pixel value.",
+        "b": "Incorrect. Nearest-neighbor interpolation selects the value of the closest pixel rather than using the four surrounding pixels.",
+        "c": "Incorrect. Inverse mapping determines the corresponding location in the original image; it is not an interpolation method.",
+        "d": "Incorrect. Translation is a geometric transformation and does not perform pixel-value interpolation."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "6. In inverse mapping, what is calculated for a pixel location in the transformed image?",
+      "answers": {
+        "a": "Only the size of the original image.",
+        "b": "The corresponding location in the original image.",
+        "c": "Only the rotation angle.",
+        "d": "The number of interpolation methods available."
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. Inverse mapping is concerned with finding corresponding pixel locations rather than determining only image size.",
+        "b": "Correct. In inverse mapping, the corresponding location in the original image is calculated for each location in the transformed image.",
+        "c": "Incorrect. The rotation angle may be part of a transformation, but inverse mapping is used to determine the corresponding source location.",
+        "d": "Incorrect. Inverse mapping does not determine how many interpolation methods are available."
+      },
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "7. A point $(4,0)$ is rotated by $30^\\circ$ about the origin. Which transformed point is obtained approximately?",
+      "answers": {
+        "a": "$(3.46,2)$",
+        "b": "$(2,3.46)$",
+        "c": "$(-3.46,2)$",
+        "d": "$(4,2)$"
+      },
+      "correctAnswer": "a",
+      "explanations": {
+        "a": "Correct. Using the rotation equations, $x'=4\\cos(30^\\circ)\\approx3.46$ and $y'=4\\sin(30^\\circ)=2$, giving approximately $(3.46,2)$.",
+        "b": "Incorrect. The horizontal and vertical coordinates have been interchanged in this option.",
+        "c": "Incorrect. A $30^\\circ$ rotation of $(4,0)$ about the origin does not produce a negative horizontal coordinate.",
+        "d": "Incorrect. The horizontal coordinate changes during the rotation and is not equal to $4$."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "8. An image is first translated and then rotated. If the order is changed so that the image is first rotated and then translated, what can happen?",
+      "answers": {
+        "a": "The image must remain exactly the same.",
+        "b": "Both transformations are cancelled.",
+        "c": "The final transformed image may be different.",
+        "d": "Only the pixel intensity range changes."
+      },
+      "correctAnswer": "c",
+      "explanations": {
+        "a": "Incorrect. Multiple transformations do not generally produce the same result when their order is changed.",
+        "b": "Incorrect. Changing the order does not cause the transformations to cancel each other.",
+        "c": "Correct. The order of multiple transformations can affect the final geometric result, so changing the order may produce a different transformed image.",
+        "d": "Incorrect. The primary effect of changing the order is on the geometric transformation of the image, not only on its pixel intensity range."
+      },
+      "difficulty": "advanced"
+    },
+    {
+      "question": "9. Which statement best compares nearest-neighbor, bilinear, and bicubic interpolation?",
+      "answers": {
+        "a": "All three methods use exactly one neighbouring pixel.",
+        "b": "Nearest-neighbor uses the closest pixel, bilinear uses four surrounding pixels, and bicubic commonly uses a $4\\times4$ neighbourhood.",
+        "c": "Bilinear and bicubic interpolation do not require neighbouring pixels.",
+        "d": "Bicubic interpolation is always computationally simpler than nearest-neighbor interpolation."
+      },
+      "correctAnswer": "b",
+      "explanations": {
+        "a": "Incorrect. The interpolation methods use different numbers of neighbouring pixels.",
+        "b": "Correct. Nearest-neighbor interpolation uses the closest pixel, bilinear interpolation uses four surrounding pixels, and bicubic interpolation commonly uses a $4\\times4$ neighbourhood.",
+        "c": "Incorrect. Both bilinear and bicubic interpolation estimate a value using neighbouring pixels.",
+        "d": "Incorrect. Bicubic interpolation generally requires more computation than nearest-neighbor interpolation because it uses a larger neighbourhood."
+      },
+      "difficulty": "advanced"
+    }
+  ]
+}
