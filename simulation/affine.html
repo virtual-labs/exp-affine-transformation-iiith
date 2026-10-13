@@ -1,0 +1,1440 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affine Transformation Simulation</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --bg: #f3f5f8;
+        --panel: #ffffff;
+        --border: #d4d9e0;
+        --accent: #1f6feb;
+        --muted: #5d6470;
+        --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: var(--bg);
+        color: #1f2937;
+      }
+
+      .app {
+        max-width: 1200px;
+        margin: 28px auto;
+        padding: 20px;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 20px;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid var(--border);
+        background: #f8fafc;
+        color: #111827;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+
+      .workspace {
+        display: grid;
+        grid-template-columns: 1.3fr 0.8fr 0.8fr;
+        gap: 18px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        border-radius: 12px;
+        padding: 14px;
+        min-height: 260px;
+      }
+
+      .panel h3 {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px;
+        margin: 0 0 12px;
+        font-size: 1.1rem;
+      }
+
+      .dims {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .mosaic-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: #293541;
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      #Mosaic {
+        position: relative;
+      }
+
+      #Mosaic-img {
+        position: relative;
+        z-index: 1;
+        display: block;
+        max-width: 100%;
+        max-height: 420px;
+        border-radius: 8px;
+        user-select: none;
+        -webkit-user-drag: none;
+        touch-action: none;
+      }
+
+      .selection-overlay {
+        position: absolute;
+        border: 2px solid #3b82f6;
+        background: rgba(59, 130, 246, 0.18);
+        pointer-events: none;
+        display: none;
+        z-index: 20;
+      }
+
+      .image-box {
+        display: flex;
+        height: 260px;
+        padding: 8px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f8fafc, #eef2f7);
+        overflow: auto;
+      }
+
+      .image-box img {
+        display: block;
+        margin: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 6px;
+      }
+
+      .image-box img.true-scale {
+        max-width: none;
+        max-height: none;
+        border-radius: 0;
+        image-rendering: pixelated;
+      }
+
+      .scale-note {
+        margin: 8px 0 0;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+
+      .controls {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 20px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px 18px;
+      }
+
+      .group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .group h3 {
+        margin: 0 0 6px;
+      }
+
+      .group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+      }
+
+      .inline-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+      }
+
+      fieldset {
+        margin: 0 0 6px;
+        padding: 10px 12px 12px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+      }
+
+      fieldset:disabled {
+        opacity: 0.5;
+      }
+
+      legend {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 6px;
+        font-weight: 600;
+      }
+
+      legend label {
+        color: #1f2937;
+      }
+
+      .order-badge {
+        display: none;
+        min-width: 22px;
+        padding: 1px 6px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.8rem;
+        text-align: center;
+      }
+
+      body.multiple-mode .order-badge {
+        display: inline-block;
+      }
+
+      body.multiple-mode .single-op {
+        display: none;
+      }
+
+      .slider-row {
+        display: grid;
+        grid-template-columns: 9.5rem 1fr 4.5rem;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+        color: var(--muted);
+      }
+
+      .slider-row input[type="range"] {
+        width: 100%;
+      }
+
+      .slider-row input[type="number"] {
+        width: 100%;
+        padding: 4px 6px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font: inherit;
+      }
+
+      .order-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .order-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        border: 1px dashed var(--border);
+        border-radius: 8px;
+      }
+
+      .order-list li span {
+        flex: 1;
+      }
+
+      .order-list button {
+        padding: 4px 10px;
+      }
+
+      .hint {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .steps {
+        margin-top: 18px;
+      }
+
+      .steps-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .steps-grid figure {
+        margin: 0;
+        width: 150px;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      .steps-grid img {
+        display: block;
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: #eef2f7;
+      }
+
+      .status {
+        margin-top: 16px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+      }
+
+      @media (max-width: 900px) {
+        .app {
+          margin: 0 auto;
+          padding: 16px;
+        }
+
+        .topbar {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+
+        .controls {
+          grid-template-columns: 1fr;
+        }
+
+        .slider-row {
+          grid-template-columns: 1fr 4.5rem;
+        }
+
+        .slider-row > span {
+          grid-column: 1 / -1;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="topbar">
+        <div class="toolbar">
+          <button id="button1" type="button">Select Image</button>
+          <button id="button4" type="button">Reset</button>
+          <button id="button2" type="button" class="primary">Run</button>
+        </div>
+        <div id="status" class="status">OpenCV is being initialized…</div>
+      </div>
+
+      <div class="workspace">
+        <div id="Mosaic" class="panel">
+          <h3>Mosaic</h3>
+          <div class="mosaic-wrap">
+            <img
+              id="Mosaic-img"
+              src="images/Mosaic.png"
+              alt="Mosaic"
+              draggable="false"
+            />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Input Image <span id="inputDims" class="dims">— × —</span></h3>
+          <div class="image-box">
+            <img id="layer4Image" src="images/Layer-4.jpg" alt="Selected input" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>
+            Output Image <span id="outputDims" class="dims">— × —</span>
+          </h3>
+          <div class="image-box">
+            <img id="layer5outputImage" src="images/Layer-5.jpg" alt="Output" />
+          </div>
+          <p class="scale-note">
+            Input and output are drawn at the same display scale; scroll the
+            output panel if it is larger than the box.
+          </p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="group">
+          <h3>Transformation Mode</h3>
+          <div class="inline-options">
+            <label
+              ><input type="radio" name="mode" value="single" checked /> Single
+              transformation</label
+            >
+            <label
+              ><input type="radio" name="mode" value="multiple" /> Multiple
+              transformations</label
+            >
+          </div>
+
+          <fieldset id="orderGroup" disabled>
+            <legend>Order of Operations (first to last)</legend>
+            <ol id="orderList" class="order-list"></ol>
+          </fieldset>
+
+          <fieldset id="interpolationGroup">
+            <legend>Interpolation Technique</legend>
+            <div class="inline-options">
+              <label
+                ><input type="radio" name="interTech" value="nearest" checked />
+                Nearest</label
+              >
+              <label
+                ><input type="radio" name="interTech" value="bilinear" />
+                Bilinear</label
+              >
+              <label
+                ><input type="radio" name="interTech" value="bicubic" />
+                Bicubic</label
+              >
+            </div>
+            <p id="interpolationHint" class="hint"></p>
+          </fieldset>
+        </div>
+
+        <div class="group">
+          <h3>Parameters</h3>
+
+          <fieldset id="scaleGroup">
+            <legend>
+              <label
+                ><input
+                  class="single-op"
+                  type="radio"
+                  name="singleOp"
+                  value="scale"
+                  checked
+                />
+                <span>Scaling (2<sup>x</sup>)</span></label
+              >
+              <span class="order-badge" data-op="scale"></span>
+            </legend>
+            <div class="inline-options">
+              <label
+                ><input type="radio" name="scaleDir" value="up" /> Upscale</label
+              >
+              <label
+                ><input type="radio" name="scaleDir" value="down" checked />
+                Downscale</label
+              >
+            </div>
+            <div class="slider-row">
+              <span>x</span>
+              <input id="scaleExp" type="range" min="0" max="5" step="1" value="0" />
+              <input
+                id="scaleExpValue"
+                type="number"
+                min="0"
+                max="5"
+                step="1"
+                value="0"
+                aria-label="Scaling exponent"
+              />
+            </div>
+            <p id="scaleLimitHint" class="hint"></p>
+          </fieldset>
+
+          <fieldset id="rotateGroup" disabled>
+            <legend>
+              <label
+                ><input
+                  class="single-op"
+                  type="radio"
+                  name="singleOp"
+                  value="rotate"
+                />
+                Rotation (anticlockwise)</label
+              >
+              <span class="order-badge" data-op="rotate"></span>
+            </legend>
+            <div class="slider-row">
+              <span>Angle (0–360°)</span>
+              <input id="angle" type="range" min="0" max="360" step="1" value="0" />
+              <input
+                id="angleValue"
+                type="number"
+                min="0"
+                max="360"
+                step="1"
+                value="0"
+                aria-label="Rotation angle in degrees"
+              />
+            </div>
+          </fieldset>
+
+          <fieldset id="translateGroup" disabled>
+            <legend>
+              <label
+                ><input
+                  class="single-op"
+                  type="radio"
+                  name="singleOp"
+                  value="translate"
+                />
+                Translation</label
+              >
+              <span class="order-badge" data-op="translate"></span>
+            </legend>
+            <div class="slider-row">
+              <span>X-translation (px)</span>
+              <input id="tx" type="range" min="0" max="300" step="1" value="0" />
+              <input
+                id="txValue"
+                type="number"
+                min="0"
+                max="300"
+                step="1"
+                value="0"
+                aria-label="X translation in pixels"
+              />
+            </div>
+            <div class="slider-row">
+              <span>Y-translation (px)</span>
+              <input id="ty" type="range" min="0" max="300" step="1" value="0" />
+              <input
+                id="tyValue"
+                type="number"
+                min="0"
+                max="300"
+                step="1"
+                value="0"
+                aria-label="Y translation in pixels"
+              />
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="panel steps">
+        <h3>Intermediate Results</h3>
+        <div id="stepsGrid" class="steps-grid">
+          <p class="hint">Run a transformation to see each stage here.</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="js/opencv.js"></script>
+    <script type="text/javascript">
+      const DEFAULT_ORDER = ["scale", "rotate", "translate"];
+      const OP_LABELS = {
+        scale: "Scaling",
+        rotate: "Rotation",
+        translate: "Translation",
+      };
+      const OP_GROUPS = {
+        scale: "scaleGroup",
+        rotate: "rotateGroup",
+        translate: "translateGroup",
+      };
+      const MAX_OUTPUT_SIDE = 4096;
+      const MAX_SCALE_EXPONENT = 5;
+      const MAX_SCALED_SIDE = 2048;
+      const MIN_SCALED_SIDE = 8;
+
+      const app = {
+        mosaicMat: null,
+        inputGray: null,
+        processedImage: null,
+        order: DEFAULT_ORDER.slice(),
+        selection: null,
+        dragging: false,
+        startPoint: null,
+        currentPoint: null,
+      };
+
+      const mosaic = document.getElementById("Mosaic");
+      const mosaicWrap = document.querySelector(".mosaic-wrap");
+      const mosaicImg = document.getElementById("Mosaic-img");
+      const inputImg = document.getElementById("layer4Image");
+      const outputImg = document.getElementById("layer5outputImage");
+      const statusEl = document.getElementById("status");
+      const selectionOverlay = document.createElement("div");
+      selectionOverlay.className = "selection-overlay";
+      mosaicWrap.appendChild(selectionOverlay);
+
+      function safeDelete(mat) {
+        if (mat && typeof mat.delete === "function" && !mat.isDeleted()) {
+          mat.delete();
+        }
+      }
+
+      function setStatus(message, isError) {
+        statusEl.textContent = message;
+        statusEl.style.background = isError ? "#fef2f2" : "#eff6ff";
+        statusEl.style.color = isError ? "#b91c1c" : "#1d4ed8";
+      }
+
+      function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+      }
+
+      /* ---------- Mosaic selection (native pointer / touch events) ---------- */
+
+      function placeSelectionOverlay(displayX, displayY, displayW, displayH) {
+        const wrapRect = mosaicWrap.getBoundingClientRect();
+        const imageRect = mosaicImg.getBoundingClientRect();
+        const offsetX = imageRect.left - wrapRect.left;
+        const offsetY = imageRect.top - wrapRect.top;
+
+        selectionOverlay.style.left = offsetX + displayX + "px";
+        selectionOverlay.style.top = offsetY + displayY + "px";
+        selectionOverlay.style.width = displayW + "px";
+        selectionOverlay.style.height = displayH + "px";
+      }
+
+      function getSelectionPoint(event) {
+        const source = event.touches?.[0] || event.changedTouches?.[0] || event;
+        return {
+          clientX: source.clientX,
+          clientY: source.clientY,
+        };
+      }
+
+      function beginSelection(event) {
+        if (app.dragging) return;
+        if (
+          event.type === "mousedown" &&
+          event.button !== 0 &&
+          event.which !== 1
+        ) {
+          return;
+        }
+        event.preventDefault();
+
+        const point = getSelectionPoint(event);
+        const rect = mosaicImg.getBoundingClientRect();
+        const localX = clamp(point.clientX - rect.left, 0, rect.width);
+        const localY = clamp(point.clientY - rect.top, 0, rect.height);
+
+        app.dragging = true;
+        app.startPoint = {
+          x: localX * (mosaicImg.naturalWidth / rect.width),
+          y: localY * (mosaicImg.naturalHeight / rect.height),
+        };
+        app.currentPoint = { ...app.startPoint };
+
+        placeSelectionOverlay(localX, localY, 0, 0);
+        selectionOverlay.style.display = "block";
+
+        setStatus("Drag across the mosaic to create a crop region.");
+      }
+
+      function moveSelection(event) {
+        if (!app.dragging || !app.startPoint) return;
+
+        event.preventDefault();
+        const point = getSelectionPoint(event);
+
+        const rect = mosaicImg.getBoundingClientRect();
+        const scaleX = mosaicImg.naturalWidth / rect.width;
+        const scaleY = mosaicImg.naturalHeight / rect.height;
+        const localX = clamp(point.clientX - rect.left, 0, rect.width);
+        const localY = clamp(point.clientY - rect.top, 0, rect.height);
+
+        const x = localX * scaleX;
+        const y = localY * scaleY;
+        app.currentPoint = { x, y };
+
+        const x1 = Math.min(app.startPoint.x, x);
+        const y1 = Math.min(app.startPoint.y, y);
+        const x2 = Math.max(app.startPoint.x, x);
+        const y2 = Math.max(app.startPoint.y, y);
+
+        placeSelectionOverlay(
+          x1 / scaleX,
+          y1 / scaleY,
+          (x2 - x1) / scaleX,
+          (y2 - y1) / scaleY,
+        );
+      }
+
+      function finalizeSelection(event) {
+        if (!app.dragging) return;
+
+        if (event) {
+          event.preventDefault();
+          moveSelection(event);
+        }
+
+        const x1 = Math.min(app.startPoint.x, app.currentPoint.x);
+        const y1 = Math.min(app.startPoint.y, app.currentPoint.y);
+        const x2 = Math.max(app.startPoint.x, app.currentPoint.x);
+        const y2 = Math.max(app.startPoint.y, app.currentPoint.y);
+
+        app.dragging = false;
+        selectionOverlay.style.display = "none";
+
+        if (x2 - x1 < 5 || y2 - y1 < 5) {
+          setStatus(
+            "Selection is too small. Drag a larger region on the mosaic.",
+            true,
+          );
+          return;
+        }
+
+        const left = clamp(Math.round(x1), 0, mosaicImg.naturalWidth - 1);
+        const top = clamp(Math.round(y1), 0, mosaicImg.naturalHeight - 1);
+        app.selection = {
+          x1: left,
+          y1: top,
+          width: clamp(Math.round(x2 - x1), 1, mosaicImg.naturalWidth - left),
+          height: clamp(Math.round(y2 - y1), 1, mosaicImg.naturalHeight - top),
+        };
+
+        cropFromSelection(app.selection);
+      }
+
+      function setupMosaicSelection() {
+        mosaicImg.addEventListener("pointerdown", (event) => {
+          beginSelection(event);
+          if (app.dragging && mosaicImg.setPointerCapture) {
+            mosaicImg.setPointerCapture(event.pointerId);
+          }
+        });
+        mosaicImg.addEventListener("pointermove", moveSelection);
+        mosaicImg.addEventListener("pointerup", finalizeSelection);
+        mosaicImg.addEventListener("pointercancel", finalizeSelection);
+        mosaicImg.addEventListener("mousedown", beginSelection);
+        mosaicImg.addEventListener("mousemove", moveSelection);
+        window.addEventListener("mouseup", finalizeSelection);
+        mosaicImg.addEventListener("touchstart", beginSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchmove", moveSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchend", finalizeSelection, {
+          passive: false,
+        });
+        mosaicImg.addEventListener("touchcancel", finalizeSelection, {
+          passive: false,
+        });
+      }
+
+      /* ---------- Image I/O ---------- */
+
+      function loadImage(url) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = "Anonymous";
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const imageData = ctx.getImageData(0, 0, img.width, img.height);
+            const mat = new cv.Mat(
+              imageData.height,
+              imageData.width,
+              cv.CV_8UC4,
+            );
+            mat.data.set(imageData.data);
+            resolve(mat);
+          };
+          img.onerror = (err) => reject(err);
+          img.src = url;
+        });
+      }
+
+      function matToDataUrl(mat) {
+        const canvas = document.createElement("canvas");
+        cv.imshow(canvas, mat);
+        return canvas.toDataURL();
+      }
+
+      function setDims(id, width, height) {
+        document.getElementById(id).textContent =
+          width && height ? width + " × " + height : "— × —";
+      }
+
+      // Draw input and output at one shared display scale so that the effect
+      // of scaling stays visible instead of being stretched to fit the panel.
+      function applyTrueScale() {
+        if (!app.inputGray) return;
+        const box = inputImg.parentElement;
+        const available = Math.min(box.clientWidth, box.clientHeight) - 16;
+        const factor = Math.min(
+          1,
+          available / Math.max(app.inputGray.cols, app.inputGray.rows),
+        );
+
+        [inputImg, outputImg].forEach((img) => {
+          const w = Number(img.dataset.width);
+          const h = Number(img.dataset.height);
+          if (!w || !h) return;
+          img.classList.add("true-scale");
+          img.style.width = Math.max(1, Math.round(w * factor)) + "px";
+          img.style.height = Math.max(1, Math.round(h * factor)) + "px";
+        });
+      }
+
+      function showMat(img, mat) {
+        img.src = matToDataUrl(mat);
+        img.dataset.width = mat.cols;
+        img.dataset.height = mat.rows;
+      }
+
+      function showPlaceholder(img, src) {
+        img.src = src;
+        delete img.dataset.width;
+        delete img.dataset.height;
+        img.classList.remove("true-scale");
+        img.style.width = "";
+        img.style.height = "";
+      }
+
+      function cropFromSelection(selection) {
+        if (!app.mosaicMat) {
+          setStatus("The mosaic image has not loaded yet.", true);
+          return;
+        }
+
+        const rect = new cv.Rect(
+          selection.x1,
+          selection.y1,
+          selection.width,
+          selection.height,
+        );
+        const roi = app.mosaicMat.roi(rect);
+        const gray = new cv.Mat();
+        cv.cvtColor(roi, gray, cv.COLOR_RGBA2GRAY);
+        roi.delete();
+
+        safeDelete(app.inputGray);
+        app.inputGray = gray;
+        showMat(inputImg, gray);
+        setDims("inputDims", gray.cols, gray.rows);
+        updateScaleLimit();
+
+        safeDelete(app.processedImage);
+        app.processedImage = null;
+        showPlaceholder(outputImg, "images/Layer-5.jpg");
+        setDims("outputDims");
+        clearSteps();
+        applyTrueScale();
+
+        setStatus(
+          "Input region selected (" +
+            gray.cols +
+            " × " +
+            gray.rows +
+            "). Choose the transformation parameters and click Run.",
+        );
+      }
+
+      /* ---------- Controls ---------- */
+
+      function getCheckedValue(name) {
+        return document.querySelector('input[name="' + name + '"]:checked')
+          ?.value;
+      }
+
+      function bindSliderPair(rangeId, numberId) {
+        const range = document.getElementById(rangeId);
+        const number = document.getElementById(numberId);
+        range.addEventListener("input", () => {
+          number.value = range.value;
+        });
+        number.addEventListener("change", () => {
+          const min = Number(number.min);
+          const max = Number(number.max);
+          const value = clamp(Math.round(Number(number.value) || 0), min, max);
+          number.value = value;
+          range.value = value;
+        });
+      }
+
+      function setSliderValue(rangeId, numberId, value) {
+        document.getElementById(rangeId).value = value;
+        document.getElementById(numberId).value = value;
+      }
+
+      function renderOrderList() {
+        const list = document.getElementById("orderList");
+        list.innerHTML = "";
+
+        app.order.forEach((op, index) => {
+          const item = document.createElement("li");
+          const label = document.createElement("span");
+          label.textContent = index + 1 + ". " + OP_LABELS[op];
+
+          const up = document.createElement("button");
+          up.type = "button";
+          up.textContent = "↑";
+          up.setAttribute("aria-label", "Move " + OP_LABELS[op] + " earlier");
+          up.disabled = index === 0;
+          up.addEventListener("click", () => moveOrder(index, -1));
+
+          const down = document.createElement("button");
+          down.type = "button";
+          down.textContent = "↓";
+          down.setAttribute("aria-label", "Move " + OP_LABELS[op] + " later");
+          down.disabled = index === app.order.length - 1;
+          down.addEventListener("click", () => moveOrder(index, 1));
+
+          item.append(label, up, down);
+          list.appendChild(item);
+        });
+
+        document.querySelectorAll(".order-badge").forEach((badge) => {
+          badge.textContent = app.order.indexOf(badge.dataset.op) + 1;
+        });
+      }
+
+      function moveOrder(index, delta) {
+        const target = index + delta;
+        if (target < 0 || target >= app.order.length) return;
+        const swapped = app.order[target];
+        app.order[target] = app.order[index];
+        app.order[index] = swapped;
+        renderOrderList();
+        setStatus(
+          "Order of operations: " +
+            app.order.map((op) => OP_LABELS[op]).join(" → ") +
+            ".",
+        );
+      }
+
+      // Enable only the controls that matter for the current mode/choice.
+      function updateControlState() {
+        const mode = getCheckedValue("mode");
+        const singleOp = getCheckedValue("singleOp");
+        const multiple = mode === "multiple";
+
+        document.body.classList.toggle("multiple-mode", multiple);
+        document.getElementById("orderGroup").disabled = !multiple;
+
+        Object.keys(OP_GROUPS).forEach((op) => {
+          document.getElementById(OP_GROUPS[op]).disabled =
+            !multiple && op !== singleOp;
+        });
+
+        const interpolationGroup =
+          document.getElementById("interpolationGroup");
+        const hint = document.getElementById("interpolationHint");
+        if (multiple) {
+          interpolationGroup.disabled = true;
+          document.querySelector(
+            'input[name="interTech"][value="nearest"]',
+          ).checked = true;
+          hint.textContent =
+            "Fixed to nearest neighbour for multiple transformations.";
+        } else if (singleOp === "translate") {
+          interpolationGroup.disabled = true;
+          hint.textContent =
+            "Not used for translation by whole pixels.";
+        } else {
+          interpolationGroup.disabled = false;
+          hint.textContent = "";
+        }
+
+        updateScaleLimit();
+      }
+
+      // Limit the scaling exponent for the current input so the scaled image
+      // stays between MIN_SCALED_SIDE and MAX_SCALED_SIDE pixels.
+      function updateScaleLimit() {
+        const range = document.getElementById("scaleExp");
+        const number = document.getElementById("scaleExpValue");
+        const hint = document.getElementById("scaleLimitHint");
+        const upscale = getCheckedValue("scaleDir") === "up";
+        let maxExponent = MAX_SCALE_EXPONENT;
+
+        if (app.inputGray) {
+          const longSide = Math.max(app.inputGray.cols, app.inputGray.rows);
+          const shortSide = Math.min(app.inputGray.cols, app.inputGray.rows);
+          maxExponent = clamp(
+            Math.floor(
+              upscale
+                ? Math.log2(MAX_SCALED_SIDE / longSide)
+                : Math.log2(shortSide / MIN_SCALED_SIDE),
+            ),
+            0,
+            MAX_SCALE_EXPONENT,
+          );
+          hint.textContent =
+            "Maximum x = " +
+            maxExponent +
+            " (" +
+            (upscale ? "×" + 2 ** maxExponent : "×1/" + 2 ** maxExponent) +
+            ") for this " +
+            app.inputGray.cols +
+            " × " +
+            app.inputGray.rows +
+            " input.";
+        } else {
+          hint.textContent = "";
+        }
+
+        range.max = maxExponent;
+        number.max = maxExponent;
+        if (Number(number.value) > maxExponent) {
+          setSliderValue("scaleExp", "scaleExpValue", maxExponent);
+        }
+      }
+
+      function readParams() {
+        const mode = getCheckedValue("mode") || "single";
+        const exponent = Number(document.getElementById("scaleExpValue").value);
+        const direction = getCheckedValue("scaleDir") || "down";
+
+        return {
+          mode,
+          operations:
+            mode === "multiple"
+              ? app.order.slice()
+              : [getCheckedValue("singleOp") || "scale"],
+          scaleDirection: direction,
+          scaleExponent: exponent,
+          scaleFactor: direction === "up" ? 2 ** exponent : 2 ** -exponent,
+          angle: Number(document.getElementById("angleValue").value),
+          tx: Number(document.getElementById("txValue").value),
+          ty: Number(document.getElementById("tyValue").value),
+          interpolation:
+            mode === "multiple"
+              ? "nearest"
+              : getCheckedValue("interTech") || "nearest",
+        };
+      }
+
+      /* ---------- Affine pipeline ---------- */
+
+      function multiply(a, b) {
+        const result = [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+        ];
+        for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 3; c++) {
+            for (let k = 0; k < 3; k++) {
+              result[r][c] += a[r][k] * b[k][c];
+            }
+          }
+        }
+        return result;
+      }
+
+      // Operations are composed in continuous image coordinates (pixel i
+      // covers [i, i + 1)); convert to the pixel-index form warpAffine expects.
+      function toPixelMatrix(matrix) {
+        const toContinuous = [
+          [1, 0, 0.5],
+          [0, 1, 0.5],
+          [0, 0, 1],
+        ];
+        const toPixel = [
+          [1, 0, -0.5],
+          [0, 1, -0.5],
+          [0, 0, 1],
+        ];
+        return multiply(multiply(toPixel, matrix), toContinuous);
+      }
+
+      // Compose the selected operations into one 3x3 matrix that maps input
+      // pixel coordinates to output pixel coordinates.
+      //   Scaling     : about the image origin; the canvas grows/shrinks by s.
+      //   Rotation    : anticlockwise about the centre of the current canvas.
+      //   Translation : shift in pixels of the current canvas (right / down).
+      // The canvas size only changes with scaling, so rotated corners and
+      // translated content that leave the canvas are clipped.
+      function buildTransform(width, height, params) {
+        let matrix = [
+          [1, 0, 0],
+          [0, 1, 0],
+          [0, 0, 1],
+        ];
+        let frameW = width;
+        let frameH = height;
+        const steps = [];
+
+        params.operations.forEach((op) => {
+          if (op === "scale") {
+            const s = params.scaleFactor;
+            matrix = multiply(
+              [
+                [s, 0, 0],
+                [0, s, 0],
+                [0, 0, 1],
+              ],
+              matrix,
+            );
+            frameW *= s;
+            frameH *= s;
+          } else if (op === "rotate") {
+            const cx = frameW / 2;
+            const cy = frameH / 2;
+            const theta = (params.angle * Math.PI) / 180;
+            const a = Math.cos(theta);
+            const b = Math.sin(theta);
+            matrix = multiply(
+              [
+                [a, b, (1 - a) * cx - b * cy],
+                [-b, a, b * cx + (1 - a) * cy],
+                [0, 0, 1],
+              ],
+              matrix,
+            );
+          } else if (op === "translate") {
+            matrix = multiply(
+              [
+                [1, 0, params.tx],
+                [0, 1, params.ty],
+                [0, 0, 1],
+              ],
+              matrix,
+            );
+          }
+
+          steps.push({
+            op,
+            matrix: toPixelMatrix(matrix),
+            width: Math.max(1, Math.round(frameW)),
+            height: Math.max(1, Math.round(frameH)),
+          });
+        });
+
+        return {
+          matrix: toPixelMatrix(matrix),
+          width: Math.max(1, Math.round(frameW)),
+          height: Math.max(1, Math.round(frameH)),
+          steps,
+        };
+      }
+
+      function interpolationFlag(name) {
+        if (name === "bilinear") return cv.INTER_LINEAR;
+        if (name === "bicubic") return cv.INTER_CUBIC;
+        return cv.INTER_NEAREST;
+      }
+
+      function warpImage(src, matrix, width, height, interpolation) {
+        const m = cv.matFromArray(2, 3, cv.CV_64F, [
+          matrix[0][0],
+          matrix[0][1],
+          matrix[0][2],
+          matrix[1][0],
+          matrix[1][1],
+          matrix[1][2],
+        ]);
+        const dst = new cv.Mat();
+        cv.warpAffine(
+          src,
+          dst,
+          m,
+          new cv.Size(width, height),
+          interpolationFlag(interpolation),
+          cv.BORDER_CONSTANT,
+          new cv.Scalar(0, 0, 0, 255),
+        );
+        m.delete();
+        return dst;
+      }
+
+      function describeStep(op, params) {
+        if (op === "scale") {
+          return (
+            "Scaling ×" +
+            (params.scaleFactor >= 1
+              ? params.scaleFactor
+              : "1/" + 2 ** params.scaleExponent)
+          );
+        }
+        if (op === "rotate") return "Rotation " + params.angle + "°";
+        return "Translation (" + params.tx + ", " + params.ty + ") px";
+      }
+
+      function clearSteps() {
+        document.getElementById("stepsGrid").innerHTML =
+          '<p class="hint">Run a transformation to see each stage here.</p>';
+      }
+
+      function addStepFigure(grid, src, caption) {
+        const figure = document.createElement("figure");
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = caption;
+        const figcaption = document.createElement("figcaption");
+        figcaption.textContent = caption;
+        figure.append(img, figcaption);
+        grid.appendChild(figure);
+      }
+
+      function isIdentity(params) {
+        return params.operations.every((op) => {
+          if (op === "scale") return params.scaleExponent === 0;
+          if (op === "rotate") return params.angle % 360 === 0;
+          return params.tx === 0 && params.ty === 0;
+        });
+      }
+
+      function doTransform() {
+        if (!app.inputGray) {
+          setStatus(
+            "Please select a valid region from the mosaic first.",
+            true,
+          );
+          return;
+        }
+
+        const params = readParams();
+        const transform = buildTransform(
+          app.inputGray.cols,
+          app.inputGray.rows,
+          params,
+        );
+
+        if (
+          transform.width > MAX_OUTPUT_SIDE ||
+          transform.height > MAX_OUTPUT_SIDE
+        ) {
+          setStatus(
+            "The output would be " +
+              transform.width +
+              " × " +
+              transform.height +
+              " pixels, which is too large. Reduce the scaling or select a smaller region.",
+            true,
+          );
+          return;
+        }
+
+        const grid = document.getElementById("stepsGrid");
+        grid.innerHTML = "";
+        addStepFigure(
+          grid,
+          inputImg.src,
+          "Input (" + app.inputGray.cols + " × " + app.inputGray.rows + ")",
+        );
+
+        let result = null;
+        transform.steps.forEach((step, index) => {
+          const stepMat = warpImage(
+            app.inputGray,
+            step.matrix,
+            step.width,
+            step.height,
+            params.interpolation,
+          );
+          addStepFigure(
+            grid,
+            matToDataUrl(stepMat),
+            index +
+              1 +
+              ". " +
+              describeStep(step.op, params) +
+              " (" +
+              step.width +
+              " × " +
+              step.height +
+              ")",
+          );
+
+          if (index === transform.steps.length - 1) {
+            result = stepMat;
+          } else {
+            stepMat.delete();
+          }
+        });
+
+        safeDelete(app.processedImage);
+        app.processedImage = result;
+        showMat(outputImg, result);
+        setDims("outputDims", result.cols, result.rows);
+        applyTrueScale();
+
+        if (isIdentity(params)) {
+          setStatus(
+            "Output rendered, but the chosen parameters leave the image unchanged. Move a slider and run again.",
+          );
+          return;
+        }
+
+        setStatus(
+          "Processing complete (" +
+            params.operations.map((op) => describeStep(op, params)).join(" → ") +
+            "). Output size " +
+            result.cols +
+            " × " +
+            result.rows +
+            ".",
+        );
+      }
+
+      function resetSimulation() {
+        safeDelete(app.inputGray);
+        safeDelete(app.processedImage);
+        app.inputGray = null;
+        app.processedImage = null;
+        app.selection = null;
+        app.dragging = false;
+        app.order = DEFAULT_ORDER.slice();
+        selectionOverlay.style.display = "none";
+
+        showPlaceholder(inputImg, "images/Layer-4.jpg");
+        showPlaceholder(outputImg, "images/Layer-5.jpg");
+        setDims("inputDims");
+        setDims("outputDims");
+        clearSteps();
+
+        document.querySelector('input[name="mode"][value="single"]').checked =
+          true;
+        document.querySelector(
+          'input[name="singleOp"][value="scale"]',
+        ).checked = true;
+        document.querySelector(
+          'input[name="scaleDir"][value="down"]',
+        ).checked = true;
+        document.querySelector(
+          'input[name="interTech"][value="nearest"]',
+        ).checked = true;
+        setSliderValue("scaleExp", "scaleExpValue", 0);
+        setSliderValue("angle", "angleValue", 0);
+        setSliderValue("tx", "txValue", 0);
+        setSliderValue("ty", "tyValue", 0);
+        renderOrderList();
+        updateControlState();
+
+        setStatus(
+          "Simulation reset. Select a mosaic region, choose the transformation, and click Run.",
+        );
+      }
+
+      function setupControls() {
+        bindSliderPair("scaleExp", "scaleExpValue");
+        bindSliderPair("angle", "angleValue");
+        bindSliderPair("tx", "txValue");
+        bindSliderPair("ty", "tyValue");
+
+        document
+          .querySelectorAll('input[name="mode"], input[name="singleOp"], input[name="scaleDir"]')
+          .forEach((input) =>
+            input.addEventListener("change", updateControlState),
+          );
+
+        renderOrderList();
+        updateControlState();
+        window.addEventListener("resize", applyTrueScale);
+      }
+
+      function onOpenCvReady() {
+        setupMosaicSelection();
+
+        loadImage("images/Mosaic.png")
+          .then((mat) => {
+            app.mosaicMat = mat;
+            setStatus(
+              "OpenCV is ready. Drag or touch-drag on the mosaic to select an input region.",
+            );
+          })
+          .catch((err) => {
+            console.error(err);
+            setStatus("Could not load the mosaic image.", true);
+          });
+      }
+
+      document.getElementById("button1").addEventListener("click", () => {
+        mosaic.style.display = "block";
+        mosaic.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setStatus(
+          "Drag or touch-drag a rectangle over the mosaic to select an input region.",
+        );
+      });
+
+      document.getElementById("button2").addEventListener("click", doTransform);
+      document
+        .getElementById("button4")
+        .addEventListener("click", resetSimulation);
+
+      setupControls();
+
+      function waitForOpenCv(maxAttempts) {
+        let attempts = 0;
+        const timer = setInterval(() => {
+          attempts += 1;
+          if (window.cv && typeof window.cv.Mat !== "undefined") {
+            clearInterval(timer);
+            onOpenCvReady();
+            return;
+          }
+          if (attempts >= maxAttempts) {
+            clearInterval(timer);
+            setStatus("OpenCV did not initialize correctly.", true);
+          }
+        }, 250);
+      }
+
+      if (window.cv && typeof window.cv.Mat !== "undefined") {
+        onOpenCvReady();
+      } else {
+        waitForOpenCv(120);
+      }
+    </script>
+  </body>
+</html>

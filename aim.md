@@ -1,0 +1,1 @@
+The aim of this experiment is to study basic image transformations such as translation, rotation, and scaling, and to understand the role of interpolation and the order of multiple transformations in obtaining the transformed image.
